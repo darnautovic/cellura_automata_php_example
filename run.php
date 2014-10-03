@@ -10,10 +10,11 @@ $world = new World($initial_data->numberOfCells, $initial_data->organisms);
 
 function render($world, $initial_data) {
     $rendering = '';
-    for ($y = 0; $y <= $initial_data->numberOfCells; $y++) {
-        for ($x = 0; $x <= $initial_data->numberOfCells; $x++) {
+    for ($y = 0; $y <= $initial_data->numberOfCells -1; $y++) {
+        $rendering .= $y;
+        for ($x = 0; $x <= $initial_data->numberOfCells -1; $x++) {
             $cells = $world->getState();
-            $rendering .= (isset($cells[$x][$y]) ? $cells[$x][$y]->to_char() : ' ');
+            $rendering .= '|' . (isset($cells[$x][$y]) ? $cells[$x][$y]->to_char() : '|');
         }
         $rendering .= "\n";
     }
@@ -25,7 +26,7 @@ function render($world, $initial_data) {
 $initial_data2 = SimpleXmlWorldParser::createXMLDocument($initial_data);
 
 
-while (true) {
+for($iteration =0; $iteration < $initial_data->numberOfIterations; $iteration++ ) {
     $output = "{$world->getTickCount()}";
     $output .= "\n".render($world, $initial_data);
     echo $output;

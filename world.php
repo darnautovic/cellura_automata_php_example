@@ -2,8 +2,6 @@
 
 error_reporting(E_ALL);
 
-class LocationOccupied extends Exception { }
-
 class World {
 
     private $tick;
@@ -37,7 +35,6 @@ class World {
      */
     private function initializeCells($noOfCells)
     {
-        echo $noOfCells;
         $this->current_cells = array();
         for($x=0; $x < $noOfCells; $x++)
         {
@@ -59,27 +56,6 @@ class World {
             $cell = $this->current_cells[$organism->coordinate_x][$organism->coordinate_y];
             $cell->setType($organism->type);
         }
-    }
-
-    function neighbours_around($cell) {
-        if (!isset($this->neighbours[$cell->key])) {
-            $this->neighbours[$cell->key] = array();
-            foreach ($this->directions as $set) {
-                $neighbour = $this->cell_at(($cell->x + $set[0]), ($cell->y + $set[1]));
-                if ($neighbour) { $this->neighbours[$cell->key][] = $neighbour; }
-            }
-        }
-        return $this->neighbours[$cell->key];
-    }
-
-    function alive_neighbours_around($cell) {
-        $alive_neighbours = 0;
-        foreach ($this->neighbours_around($cell) as $cell) {
-            if (!$cell->dead) {
-                $alive_neighbours++;
-            }
-        }
-        return $alive_neighbours;
     }
 
     /**
@@ -105,7 +81,10 @@ class World {
             }
          }
 
-        $typesCountGreaterThanThree = array_filter($typesCount, function($count){return $count >= 3; });
+//        var_dump($typesCount);
+
+        
+        $typesCountGreaterThanThree = array_filter($typesCount, function($count){return $count == 3; });
 
         if(empty($cell->getType()) && !empty($typesCountGreaterThanThree))
         {
