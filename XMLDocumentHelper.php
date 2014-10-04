@@ -96,5 +96,5 @@ class SimpleXmlWorldParser
 
 $testArray = array("key1" => '42', "key2" => "array2");
 
-var_dump(array_filter($testArray, function ($row) {return $row !== 42;}));
+//var_dump(array_filter($testArray, function ($row) {return $row !== 42;}));
 

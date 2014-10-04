@@ -38,7 +38,6 @@ class World {
         $this->current_cells = array();
         for($x=0; $x < $noOfCells; $x++)
         {
-             $this->current_cells[$x] = array();
             for($y=0; $y < $noOfCells; $y++)
             {
                 $this->current_cells[$x][$y] = new Cell($x, $y);
@@ -56,6 +55,27 @@ class World {
             $cell = $this->current_cells[$organism->coordinate_x][$organism->coordinate_y];
             $cell->setType($organism->type);
         }
+    }
+
+    function tick()
+    {
+        $this->new_cells = $this->current_cells;
+
+        foreach($this->current_cells as $currentCellRow)
+        {
+            foreach($currentCellRow as $currentCell)
+            {
+                $type = $this->calculate_next_cell_state($currentCell);
+
+                $this->new_cells[$currentCell->getX()][$currentCell->getY()] = new Cell($currentCell->getX(), $currentCell->getY(), $type);
+            }
+        }
+
+        unset($this->current_cells);
+
+        $this->current_cells = $this->new_cells;
+
+        $this->tick += 1;
     }
 
     /**
@@ -81,9 +101,6 @@ class World {
             }
          }
 
-//        var_dump($typesCount);
-
-        
         $typesCountGreaterThanThree = array_filter($typesCount, function($count){return $count == 3; });
 
         if(empty($cell->getType()) && !empty($typesCountGreaterThanThree))
@@ -100,25 +117,7 @@ class World {
         }
     }
 
-    function tick()
-    {
-        $this->new_cells = $this->current_cells;
 
-        foreach($this->new_cells as $newCellRow)
-        {
-            foreach($newCellRow as $newCell)
-            {
-                $type = $this->calculate_next_cell_state($newCell);
-                $newCell->setType($type);
-            }
-        }
-
-        unset($this->current_cells);
-
-        $this->current_cells = $this->new_cells;
-
-        $this->tick += 1;
-    }
 
     public function getTickCount()
     {
@@ -145,11 +144,11 @@ class Cell
      * @param bool $occupied
      * @param null|string $type
      */
-    function __construct($x, $y, $occupied = false, $type = NULL)
+    function __construct($x, $y, $type = NULL)
     {
         $this->x = $x;
         $this->y = $y;
-        $this->occupied = $occupied;
+        $this->occupied = FALSE;
         $this->type = $type;
     }
 

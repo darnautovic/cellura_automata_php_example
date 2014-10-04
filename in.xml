@@ -3,7 +3,7 @@
     <world>
         <cells>10</cells>
         <species>1</species>
-        <iterations>3</iterations>
+        <iterations>1</iterations>
     </world>
     <organisms>
         <organism>
@@ -44,6 +44,31 @@
         <organism>
             <x_pos>5</x_pos>
             <y_pos>5</y_pos>
+            <species>1</species>
+	    </organism>
+        <organism>
+            <x_pos>9</x_pos>
+            <y_pos>1</y_pos>
+            <species>1</species>
+	    </organism>
+        <organism>
+            <x_pos>8</x_pos>
+            <y_pos>1</y_pos>
+            <species>1</species>
+	    </organism>
+        <organism>
+            <x_pos>3</x_pos>
+            <y_pos>8</y_pos>
+            <species>1</species>
+	    </organism>
+        <organism>
+            <x_pos>1</x_pos>
+            <y_pos>7</y_pos>
+            <species>1</species>
+	    </organism>
+        <organism>
+            <x_pos>1</x_pos>
+            <y_pos>9</y_pos>
             <species>1</species>
 	    </organism>
     </organisms>
