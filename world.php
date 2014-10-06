@@ -35,6 +35,7 @@ class World {
      */
     private function initializeCells($noOfCells)
     {
+        //Possible improvement: not to initialize the whole grid - just the living cells (in that case, the boundary calculations should be implemented)
         $this->current_cells = array();
         for($x=0; $x < $noOfCells; $x++)
         {
@@ -60,13 +61,14 @@ class World {
     function tick()
     {
         $this->new_cells = $this->current_cells;
-
+        // Possible algorithm improvement: not to check surroundings (and new state) for all (empty) cells, just the living ones. For each live cell check neighbourhood.
+        // If there are another living neighbours as well as empty cells, then check rules for next iteration
         foreach($this->current_cells as $currentCellRow)
         {
             foreach($currentCellRow as $currentCell)
             {
                 $type = $this->calculate_next_cell_state($currentCell);
-
+                //Possible improvement: not to create new objects for next state, rather to re-assign the existing ones with new state
                 $this->new_cells[$currentCell->getX()][$currentCell->getY()] = new Cell($currentCell->getX(), $currentCell->getY(), $type);
             }
         }
